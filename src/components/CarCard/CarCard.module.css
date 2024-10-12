@@ -1,0 +1,145 @@
+.carCard {
+  display: flex;
+  border: 1px solid var(--gray-light);
+  border-radius: 20px;
+  padding: 24px;
+  width: 888px;
+  height: 368px;
+  background: var(--white);
+}
+
+.carImage {
+  border-radius: 10px;
+  width: 292px;
+  height: 320px;
+  background: url('path_to_image');
+}
+
+.carInfo {
+  display: flex;
+  flex-direction: column;
+
+  width: 524px;
+  height: 320px;
+  margin-left: 24px;
+}
+
+.carHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 524px;
+  height: 32px;
+  margin-bottom: 8px;
+}
+
+.carTitle {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 133%;
+  color: var(--main);
+}
+.carWrapper{
+  display: flex;
+  align-items: center;
+}
+
+.carPrice {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 133%;
+  color: var(--main);
+  margin-right: 12px;
+}
+
+.iconHeader {
+  width: 26px;
+  height: 24px;
+  fill: var(--main);
+  
+}
+
+.carDetails {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--main);
+  margin-bottom: 24px;
+}
+.iconDetails, .iconDetailsRev {
+  width: 16px;
+  height: 16px;
+}
+
+.iconDetails {
+  fill: var(--main);
+}
+
+.iconDetailsRev {
+  fill:var(--rating);
+}
+.carDescription {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 524px;
+  height: 104px;
+  margin-bottom: 24px;
+}
+
+.carBadgesItem {
+  display: flex;
+  align-items: center;
+  border-radius: 100px;
+  padding: 12px 18px;
+  /* width: 143px; */
+  height: 48px;
+  background: var(--badges);
+  mix-blend-mode: multiply;
+
+}
+
+.icon{
+  width: 20px;
+  height: 20px;
+  fill: var(--main);
+  margin-right: 8px;
+}
+
+.carBadgesItemText{
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--main);
+}
+
+.showMoreBtn {
+  border-radius: 200px;
+  padding: 16px 40px;
+  width: 166px;
+  height: 56px;
+  background: var(--button);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}

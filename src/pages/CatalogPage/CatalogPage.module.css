@@ -1,0 +1,12 @@
+.catalogPage {
+    background: var(--white);
+    /* width: 1440px; */
+height: 1836px;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 48px 64px 52px;
+
+}

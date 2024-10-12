@@ -1,0 +1,21 @@
+.nav {
+  margin-left: 450px;
+  display: flex;
+  justify-content: space-between;
+  width: 138px;
+  height: 24px;
+}
+.link {
+  display: inline-block;
+  text-decoration: none;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--main);
+}
+
+.link.active {
+  color: var(--button-hover);
+}
