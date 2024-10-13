@@ -12,7 +12,7 @@
   border-radius: 10px;
   width: 292px;
   height: 320px;
-  background: url('path_to_image');
+  /* background: url('path_to_image'); */
 }
 
 .carInfo {

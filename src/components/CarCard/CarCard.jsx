@@ -1,7 +1,18 @@
 import css from './CarCard.module.css';
 import iconSprite from '../../assets/sprite.svg';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCurrentCarId } from '../../redux/campers/slice';
 
 const CarCard = ({ car }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(setCurrentCarId(car.id)); 
+    navigate(`/catalog/${car.id}`);
+  };
+
   return (
     <article className={css.carCard}>
       <img
@@ -13,7 +24,7 @@ const CarCard = ({ car }) => {
         <div className={css.carHeader}>
           <h2 className={css.carTitle}>{car.name}</h2>
           <div className={css.carWrapper}>
-            <span className={css.carPrice}>€{car.price}</span>
+            <p className={css.carPrice}>€{car.price}</p>
             <svg className={css.iconHeader}>
               <use href={`${iconSprite}#icon-hart`}></use>
             </svg>
@@ -55,7 +66,7 @@ const CarCard = ({ car }) => {
           {car.kitchen && (
             <li className={css.carBadgesItem}>
               <svg className={css.icon}>
-                <use href={`${iconSprite}#icon-kitcen`}></use>
+                <use href={`${iconSprite}#icon-kitchen`}></use>
               </svg>
               <p className={css.carBadgesItemText}>Kitchen</p>
             </li>
@@ -100,7 +111,9 @@ const CarCard = ({ car }) => {
           </li>
         </ul>
 
-        <button className={css.showMoreBtn}>Show more</button>
+        <button className={css.showMoreBtn} onClick={handleClick}>
+          Show more
+        </button>
       </div>
     </article>
   );
