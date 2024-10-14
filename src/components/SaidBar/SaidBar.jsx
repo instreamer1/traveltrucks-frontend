@@ -168,12 +168,12 @@ const SaidBar = () => {
             }`}
             onClick={() => handleTypeChange('alcove')}>
             <svg className={css.icon}>
-              <use href={`${iconSprite}#icon-bi_grid-3x3-gap`}></use>
+              <use href={`${iconSprite}#icon-bi_grid-1x2`}></use>
             </svg>
-            Alcove
+           Van
           </button>
           <button
-            className={`${css.filterOption} ${
+            className={`${css.filterOption} ${css.filterOptionIntegr}  ${
               filters.vehicleType === 'fullyIntegrated' ? css.selected : ''
             }`}
             onClick={() => handleTypeChange('fullyIntegrated')}>
@@ -188,7 +188,7 @@ const SaidBar = () => {
             }`}
             onClick={() => handleTypeChange('panelTruck')}>
             <svg className={css.icon}>
-              <use href={`${iconSprite}#icon-bi_grid-1x2`}></use>
+              <use href={`${iconSprite}#icon-bi_grid-3x3-gap`}></use>
             </svg>
             Alcove
           </button>
