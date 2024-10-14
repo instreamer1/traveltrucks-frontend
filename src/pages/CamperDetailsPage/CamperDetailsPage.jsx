@@ -1,16 +1,12 @@
-import {
-  NavLink,
-  Outlet,
-  useParams,
-} from 'react-router-dom';
-import css from './CamperDetails.module.css';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
+import css from './CamperDetailsPage.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading, selectList } from '../../redux/campers/selectors';
 import { useEffect, useState } from 'react';
 import { setCurrentCarId } from '../../redux/campers/slice';
 import iconSprite from '../../assets/sprite.svg';
 
-const CamperDetails = () => {
+const CamperDetailsPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const { id: carId } = useParams();
@@ -22,7 +18,6 @@ const CamperDetails = () => {
   }, [carId, dispatch]);
 
   const [activeTab, setActiveTab] = useState('feature');
-  
 
   useEffect(() => {
     setActiveTab('feature');
@@ -44,13 +39,12 @@ const CamperDetails = () => {
     return <div>Car not found</div>;
   }
 
-
   return (
     <main className={css.camperDetails}>
       <section className={css.campervanDetails}>
         <h1 className={css.carTitle}>{car.name}</h1>
         <div className={css.carDetails}>
-          <span className={css.carRating}>
+          <div className={css.carRating}>
             {car.reviews?.length > 0 ? (
               <svg className={css.iconDetails}>
                 <use href={`${iconSprite}#icon-star`}></use>
@@ -60,14 +54,16 @@ const CamperDetails = () => {
                 <use href={`${iconSprite}#icon-star`}></use>
               </svg>
             )}
-            {car.rating} ({car.reviews?.length || 0} Reviews)
-          </span>
-          <span className={css.carLocation}>
+            <p className={css.ratingText}>
+              {car.rating} ({car.reviews?.length || 0} Reviews)
+            </p>
+          </div>
+          <div className={css.carLocation}>
             <svg className={css.iconLocation}>
-              <use href={`${iconSprite}#icon-loc`}></use>
-            </svg>{' '}
-            {car.location}
-          </span>
+              <use href={`${iconSprite}#icon-map`}></use>
+            </svg>
+            <p className={css.locationText}>{car.location}</p>
+          </div>
         </div>
         <p className={css.carPrice}>€{car.price}</p>
         <ul className={css.gallery}>
@@ -106,4 +102,4 @@ const CamperDetails = () => {
   );
 };
 
-export default CamperDetails;
+export default CamperDetailsPage;

@@ -13,10 +13,28 @@
 .carDetails {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   margin-bottom: 24px;
 }
 .carRating {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.iconDetails {
+  width: 16px;
+  height: 16px;
+  fill: var(--rating);
+}
+
+.iconDetailsRev {
+  width: 16px;
+  height: 16px;
+  fill: var(--badges);
+}
+
+.ratingText {
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 16px;
@@ -24,35 +42,26 @@
   text-decoration: underline;
   text-decoration-skip-ink: none;
   color: var(--main);
+  margin-left: 4px;
 }
 
-.iconDetails,
-.iconDetailsRev {
+.carLocation {
+  display: flex;
+  align-items: center;
+}
+
+.iconLocation {
   width: 16px;
   height: 16px;
-  padding-top: 3px;
-  padding-bottom: 0;
-}
-.iconDetails {
-  fill: var(--rating);
+  margin-right: 4px;
 }
 
-.iconDetailsRev {
-  fill: var(--badges)
-}
-.carLocation {
+.locationText {
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
   color: var(--main);
-}
-
-.iconLocation {
-  width: 20px;
-  height: 20px;
-  padding-top: 5px;
-  padding-bottom: 0;
 }
 .carPrice {
   font-family: var(--font-family);
@@ -67,8 +76,6 @@
   display: flex;
   gap: 24px;
   flex-basis: calc((100% - 2 * 24px) / 3);
-  /* width: 1312px;
-  height: 312px; */
   margin-bottom: 28px;
 }
 .carImgItem {
@@ -91,8 +98,6 @@
   justify-content: space-between;
 }
 
-
-
 .line {
   stroke-width: 1px;
   stroke: var(--gray-light);
@@ -108,7 +113,6 @@
 .navLink {
   position: relative;
   margin-right: 20px;
-  
 }
 
 .activeLink {
@@ -116,12 +120,12 @@
 }
 
 .activeLink::after {
-  content: ''; 
-  position: absolute; 
-  left: 0; 
-  right: 0; 
-  bottom: -18px; 
-  height: 6px; 
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -18px;
+  height: 6px;
   background-color: var(--button);
   width: 85px;
 }

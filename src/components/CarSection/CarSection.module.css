@@ -1,6 +1,6 @@
 .carCards {
   width: 888px;
-  height: 1568px;
+  min-height: 1568px;
 }
 .carList {
   display: flex;
@@ -8,8 +8,6 @@
   margin-bottom: 47px;
 }
 
-.carItem {
-}
 .pagination {
   display: flex;
   margin-left: 424px;

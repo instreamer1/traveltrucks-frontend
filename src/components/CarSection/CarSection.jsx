@@ -1,9 +1,7 @@
-// import { useEffect } from 'react';
 import CarCard from '../CarCard/CarCard';
 import css from './CarSection.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading, selectItemsPerPage, selectList, selectTotalItems } from '../../redux/campers/selectors';
-// import { fetchCampers } from '../../redux/campers/operation';
 import { setItemsPerPage } from '../../redux/campers/slice';
 
 
@@ -14,9 +12,7 @@ const CarSection = () => {
   const totalItems = useSelector(selectTotalItems);
   const isLoading = useSelector(selectIsLoading)
 
-  // useEffect(() => {
-  //   dispatch(fetchCampers());
-  // }, [dispatch]);
+ 
 
   const paginatedCars = cars.slice(0, itemsPerPage);
   const totalPages = Math.ceil(totalItems / itemsPerPage);

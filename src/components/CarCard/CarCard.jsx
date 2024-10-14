@@ -1,17 +1,31 @@
 import css from './CarCard.module.css';
 import iconSprite from '../../assets/sprite.svg';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setCurrentCarId } from '../../redux/campers/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite, setCurrentCarId } from '../../redux/campers/slice';
+import { selectFavorite } from '../../redux/campers/selectors';
 
 const CarCard = ({ car }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const favorites = useSelector(selectFavorite);
+  const isFavorite = favorites.some(item => item.id === car.id);
 
   const handleClick = () => {
-    dispatch(setCurrentCarId(car.id)); 
+    dispatch(setCurrentCarId(car.id));
     navigate(`/catalog/${car.id}`);
   };
+
+  const handleFavoriteClick = e => {
+    e.stopPropagation();
+    if (isFavorite) {
+      dispatch(removeFavorite(car.id));
+    } else {
+      dispatch(addFavorite(car));
+    }
+  };
+
+  const formattedPrice = car.price.toFixed(2);
 
   return (
     <article className={css.carCard}>
@@ -24,15 +38,25 @@ const CarCard = ({ car }) => {
         <div className={css.carHeader}>
           <h2 className={css.carTitle}>{car.name}</h2>
           <div className={css.carWrapper}>
-            <p className={css.carPrice}>€{car.price}</p>
-            <svg className={css.iconHeader}>
-              <use href={`${iconSprite}#icon-hart`}></use>
-            </svg>
+            <p className={css.carPrice}>€{formattedPrice}</p>
+            <button
+              className={css.favoriteBtn}
+              onClick={handleFavoriteClick}
+              aria-label={
+                isFavorite ? ' removeFavorite' : 'addFavorite'
+              }>
+              <svg className= {`${css.iconHeader} ${
+                isFavorite ? css.iconHeaderFav : ''}`}>
+                <use
+                  href={`${iconSprite}#icon-hart`}>
+                 </use>
+              </svg>
+            </button>
           </div>
         </div>
 
         <div className={css.carDetails}>
-          <span className={css.carRating}>
+          <div className={css.carRating}>
             {car.reviews?.length > 0 ? (
               <svg className={css.iconDetails}>
                 <use href={`${iconSprite}#icon-star`}></use>
@@ -43,13 +67,13 @@ const CarCard = ({ car }) => {
               </svg>
             )}
             {car.rating} ({car.reviews?.length || 0})
-          </span>
+          </div>
           <span className={css.carLocation}>{car.location}</span>
         </div>
 
         <p className={css.carDescription}>{car.description}</p>
 
-        <ul className={css.carBadges}>
+        <ul className={css.carBadgesList}>
           <li className={css.carBadgesItem}>
             <svg className={css.icon}>
               <use href={`${iconSprite}#icon-diagram`}></use>

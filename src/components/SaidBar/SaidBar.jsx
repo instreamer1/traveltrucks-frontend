@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from './SaidBar.module.css';
 import iconSprite from '../../assets/sprite.svg';
@@ -9,14 +9,15 @@ import { selectIsLoading } from '../../redux/campers/selectors';
 const SaidBar = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
+  const [showWarning, setShowWarning] = useState(false);
 
   const initFilters = {
     location: '',
     transmission: '',
     vehicleEquipment: {
-      ac: false,
+      AC: false,
       kitchen: false,
-      tv: false,
+      TV: false,
       bathroom: false,
     },
     vehicleType: '',
@@ -51,10 +52,29 @@ const SaidBar = () => {
 
   const handleSearch = e => {
     e.preventDefault();
+    if (!isAnyFilterSelected) {
+      setShowWarning(true);
+      return;
+    }
     dispatch(setFilters(filters));
     dispatch(fetchCampers(filters));
     setLocalFilters(initFilters);
+    setShowWarning(false);
   };
+  const isAnyFilterSelected = useMemo(() => {
+    const { location, vehicleType, vehicleEquipment } = filters;
+
+    if (location.trim() !== '') return true;
+    if (vehicleType.trim() !== '') return true;
+
+    return Object.values(vehicleEquipment).some(value => value);
+  }, [filters]);
+
+  useEffect(() => {
+    if (isAnyFilterSelected) {
+      setShowWarning(false);
+    }
+  }, [isAnyFilterSelected]);
 
   return (
     <aside className={css.sidebar}>
@@ -62,15 +82,20 @@ const SaidBar = () => {
         <label htmlFor='location' className={css.filterLabel}>
           Location
         </label>
-        <input
-          type='text'
-          id='location'
-          name='location'
-          value={filters.location}
-          onChange={handleLocationChange}
-          placeholder='City'
-          className={css.locationInputField}
-        />
+        <div className={css.inputWrapper}>
+          <svg className={css.iconDetails}>
+            <use href={`${iconSprite}#icon-map`}></use>
+          </svg>
+          <input
+            type='text'
+            id='location'
+            name='location'
+            value={filters.location}
+            onChange={handleLocationChange}
+            placeholder='City'
+            className={css.locationInputField}
+          />
+        </div>
       </div>
       <section className={css.filterSection}>
         <h4>Vehicle Equipment</h4>
@@ -165,17 +190,17 @@ const SaidBar = () => {
             <svg className={css.icon}>
               <use href={`${iconSprite}#icon-bi_grid-1x2`}></use>
             </svg>
-            Panel Truck
+            Alcove
           </button>
         </div>
       </section>
       <div className={css.buttons}>
-        <button
-          className={css.searchBtn}
-          onClick={handleSearch}
-          disabled={isLoading}>
+        <button className={css.searchBtn} onClick={handleSearch}>
           {isLoading ? 'Searching...' : 'Search'}
         </button>
+        {showWarning && (
+          <p className={css.warningMessage}>No filters selected</p>
+        )}
       </div>
     </aside>
   );

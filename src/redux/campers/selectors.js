@@ -5,3 +5,4 @@ export const selectCurrentCarId = state => state.campers.currentCarId;
 export const selectItemsPerPage = state => state.campers.itemsPerPage;
 export const selectTotalItems = state => state.campers.totalItems;
 export const selectFilters = state => state.campers.filters;
+export const selectFavorite = state => state.campers.favorites;
