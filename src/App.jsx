@@ -14,7 +14,7 @@ import { fetchCampers } from './redux/campers/operation';
 
 const App = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectIsLoading);
 
 
   useEffect(() => {

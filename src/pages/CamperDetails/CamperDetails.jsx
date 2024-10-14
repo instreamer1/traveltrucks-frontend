@@ -1,14 +1,18 @@
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import {
+  NavLink,
+  Outlet,
+  useParams,
+} from 'react-router-dom';
 import css from './CamperDetails.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading, selectList } from '../../redux/campers/selectors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { setCurrentCarId } from '../../redux/campers/slice';
 import iconSprite from '../../assets/sprite.svg';
 
 const CamperDetails = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectIsLoading);
   const { id: carId } = useParams();
   const cars = useSelector(selectList);
   const car = cars.find(car => car.id === carId);
@@ -17,7 +21,22 @@ const CamperDetails = () => {
     dispatch(setCurrentCarId(carId));
   }, [carId, dispatch]);
 
-  if (loading) {
+  const [activeTab, setActiveTab] = useState('feature');
+  
+
+  useEffect(() => {
+    setActiveTab('feature');
+  }, []);
+
+  const buildLinkClass = tab => {
+    return `${css.navLink} ${activeTab === tab ? css.activeLink : ''}`;
+  };
+
+  const handleTabClick = tab => {
+    setActiveTab(tab);
+  };
+  //
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -25,9 +44,6 @@ const CamperDetails = () => {
     return <div>Car not found</div>;
   }
 
-  const buildLinkClass = ({ isActive }) => {
-    return `${css.navLink} ${isActive ? css.activeLink : ''}`;
-  };
 
   return (
     <main className={css.camperDetails}>
@@ -67,17 +83,19 @@ const CamperDetails = () => {
         </ul>
         <p className={css.description}>{car.description}</p>
         <nav className={css.nav}>
-          <NavLink className={buildLinkClass} to='feature'>
+          <NavLink
+            className={() => buildLinkClass('feature')}
+            to='feature'
+            onClick={() => handleTabClick('feature')}>
             Features
           </NavLink>
-          <NavLink className={buildLinkClass} to='reviews'>
+          <NavLink
+            className={() => buildLinkClass('reviews')}
+            to='reviews'
+            onClick={() => handleTabClick('reviews')}>
             Reviews
           </NavLink>
         </nav>
-    
-        {/* <svg width='100%' height='2' className={css.divider}>
-          <use href={`${iconSprite}#divider`}></use>
-        </svg> */}
         <svg width='100%' height='2' className={css.line}>
           <use href={`${iconSprite}#line`}></use>
         </svg>

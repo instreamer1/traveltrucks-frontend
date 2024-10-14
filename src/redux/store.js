@@ -1,4 +1,3 @@
-
 import { configureStore } from "@reduxjs/toolkit";
 import campersReducer from './campers/slice'
 
@@ -11,4 +10,3 @@ campers: campersReducer,
 });
 
 export default store;
-

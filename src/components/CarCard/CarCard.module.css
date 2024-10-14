@@ -78,11 +78,12 @@
 }
 
 .iconDetails {
-  fill: var(--main);
+  fill:var(--rating);
 }
 
 .iconDetailsRev {
-  fill:var(--rating);
+  fill: var(--badges);
+ 
 }
 .carDescription {
   font-size: 0.9rem;

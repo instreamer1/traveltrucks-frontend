@@ -5,14 +5,31 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export const fetchCampers = createAsyncThunk(
   'campers/fetchCampers',
-  async (filters, thunkAPI) => {
+  async (filters, { rejectWithValue }) => {
     try {
-      const response = await axios.get(API_BASE_URL, { params: filters });
-      console.log(response.data);
+      const params = new URLSearchParams();
+
+      if (filters) {
+        const { location, vehicleType, vehicleEquipment } = filters;
+
+        if (location) params.append('location', location);
+        if (vehicleType) params.append('form', vehicleType);
+
+        Object.keys(vehicleEquipment).forEach((key) => {
+          if (vehicleEquipment[key]) {
+            params.append(key, 'true');
+          }
+        });
+      }
+
+      const query = params.toString() ? `?${params.toString()}` : '';
+      const response = await axios.get(`${API_BASE_URL}${query}`);
+
       return response.data;
     } catch (error) {
-      const errorMessage = error.response ? error.response.data : error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return rejectWithValue(
+        error.response ? error.response.data : { message: error.message }
+      );
     }
   }
 );
