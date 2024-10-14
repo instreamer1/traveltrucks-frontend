@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css'; 
 import css from './BookingForm.module.css';
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    date: '',
+    date: null, 
     comment: '',
   });
 
@@ -18,13 +20,20 @@ const BookingForm = () => {
     });
   };
 
+  const handleDateChange = date => {
+    setFormData({
+      ...formData,
+      date: date,
+    });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     toast.success('Booking successful!');
     setFormData({
       name: '',
       email: '',
-      date: '',
+      date: null, 
       comment: '',
     });
   };
@@ -36,40 +45,45 @@ const BookingForm = () => {
         Stay connected! We are always ready to help you.
       </p>
       <form className={css.form} onSubmit={handleSubmit}>
-        <input
-          type='text'
-          id='name'
-          name='name'
-          value={formData.name}
-          onChange={handleChange}
-          placeholder='Name*'
-          required
-        />
-        <input
-          type='email'
-          id='email'
-          name='email'
-          value={formData.email}
-          onChange={handleChange}
-          placeholder='Email*'
-          required
-        />
-
-        <input
-          type='date'
-          id='date'
-          name='date'
-          value={formData.date}
-          onChange={handleChange}
-          placeholder='Booking date*'
-          required
-        />
-        <textarea
-          id='comment'
-          name='comment'
-          value={formData.comment}
-          onChange={handleChange}
-          placeholder='comment'></textarea>
+        <label htmlFor='name'>
+          <input
+            type='text'
+            id='name'
+            name='name'
+            value={formData.name}
+            onChange={handleChange}
+            placeholder='Name*'
+            required
+          />
+        </label>
+        <label htmlFor='email'>
+          <input
+            type='email'
+            id='email' 
+            name='email'
+            value={formData.email}
+            onChange={handleChange}
+            placeholder='Email*'
+            required
+          />
+        </label>
+        <label htmlFor='date'>
+          <DatePicker
+            selected={formData.date}
+            onChange={handleDateChange}
+            placeholderText='Booking date*'
+            required
+            id='date' 
+          />
+        </label>
+        <label htmlFor='comment'>
+          <textarea
+            id='comment'
+            name='comment'
+            value={formData.comment}
+            onChange={handleChange}
+            placeholder='comment'></textarea>
+        </label>
 
         <button className={css.btn} type='submit'>
           Send

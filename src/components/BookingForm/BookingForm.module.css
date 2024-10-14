@@ -29,8 +29,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
+  width: 527px;
+  height: 420px;
 }
+
+/* label {
+  height: 0;
+} */
 
 .bookingForm input {
   border-radius: 12px;
@@ -39,8 +45,8 @@
   height: 60px;
   background: var(--inputs);
   border: none;
+  outline: none;
 }
-
 
 .bookingForm textarea {
   border-radius: 10px;
@@ -50,6 +56,7 @@
   background: var(--inputs);
   width: 100%;
   border: none;
+  outline: none;
 }
 
 .btn {
