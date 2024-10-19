@@ -1,36 +1,25 @@
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import css from './CamperDetailsPage.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading, selectList } from '../../redux/campers/selectors';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { setCurrentCarId } from '../../redux/campers/slice';
 import iconSprite from '../../assets/sprite.svg';
+import DetailsLayout from '../../components/DetailsLayout/DetailsLayout';
 
 const CamperDetailsPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const { id: carId } = useParams();
+  // const { id } = useParams();
   const cars = useSelector(selectList);
   const car = cars.find(car => car.id === carId);
+  // console.log('id', id);
 
   useEffect(() => {
     dispatch(setCurrentCarId(carId));
   }, [carId, dispatch]);
 
-  const [activeTab, setActiveTab] = useState('feature');
-
-  useEffect(() => {
-    setActiveTab('feature');
-  }, []);
-
-  const buildLinkClass = tab => {
-    return `${css.navLink} ${activeTab === tab ? css.activeLink : ''}`;
-  };
-
-  const handleTabClick = tab => {
-    setActiveTab(tab);
-  };
-  //
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -78,25 +67,9 @@ const CamperDetailsPage = () => {
           ))}
         </ul>
         <p className={css.description}>{car.description}</p>
-        <nav className={css.nav}>
-          <NavLink
-            className={() => buildLinkClass('feature')}
-            to='feature'
-            onClick={() => handleTabClick('feature')}>
-            Features
-          </NavLink>
-          <NavLink
-            className={() => buildLinkClass('reviews')}
-            to='reviews'
-            onClick={() => handleTabClick('reviews')}>
-            Reviews
-          </NavLink>
-        </nav>
-        <svg width='100%' height='2' className={css.line}>
-          <use href={`${iconSprite}#line`}></use>
-        </svg>
-
-        <Outlet context={{ car }} />
+        <div>
+          <DetailsLayout car={car} />
+        </div>
       </section>
     </main>
   );

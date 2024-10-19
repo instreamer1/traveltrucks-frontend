@@ -107,16 +107,48 @@
   text-align: center;
   color: var(--main);
   transition: background-color 0.3s, color 0.3s;
+  position: relative; 
+}
+
+.filterOption input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+
+ .filterOption > .input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.filterOption {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--gray-light);
+  border-radius: 12px;
+  width: 112px;
+  height: 96px;
+  mix-blend-mode: multiply;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--main);
+  transition: background-color 0.3s, color 0.3s;
 }
 .filterOptionIntegr {
   padding: 8px;
-}
-
-.filterOption img {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-}
+} 
 
 .filterOption.selected {
   border: 1px solid var(--button);

@@ -1,14 +1,15 @@
-import css from './CarCard.module.css';
+import PropTypes from 'prop-types';
+import css from './CamperCard.module.css';
 import iconSprite from '../../assets/sprite.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite, removeFavorite, setCurrentCarId } from '../../redux/campers/slice';
-import { selectFavorite } from '../../redux/campers/selectors';
+import { selectFavorites } from '../../redux/campers/selectors';
 
-const CarCard = ({ car }) => {
+const CamperCard = ({ car }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const favorites = useSelector(selectFavorite);
+  const favorites = useSelector(selectFavorites);
   const isFavorite = favorites.some(item => item.id === car.id);
 
   const handleClick = () => {
@@ -29,10 +30,12 @@ const CarCard = ({ car }) => {
 
   return (
     <article className={css.carCard}>
-      <img
+     <img
         className={css.carImage}
         src={car.gallery[0].thumb}
         alt={car.description}
+       width={'292'}
+       height={'320'}
       />
       <div className={css.carInfo}>
         <div className={css.carHeader}>
@@ -143,4 +146,28 @@ const CarCard = ({ car }) => {
   );
 };
 
-export default CarCard;
+export default CamperCard;
+
+CamperCard.propTypes = {
+  car: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    gallery: PropTypes.arrayOf(
+      PropTypes.shape({
+        thumb: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    description: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    reviews: PropTypes.arrayOf(PropTypes.object),
+    transmission: PropTypes.string.isRequired,
+    engine: PropTypes.string.isRequired,
+    kitchen: PropTypes.bool,
+    AC: PropTypes.bool,
+    bathroom: PropTypes.bool,
+    TV: PropTypes.bool,
+    radio: PropTypes.bool,
+  }).isRequired,
+};

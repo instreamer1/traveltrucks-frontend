@@ -1,35 +1,41 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'; 
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const fetchCampers = createAsyncThunk(
   'campers/fetchCampers',
-  async (filters, { rejectWithValue }) => {
+  async (filters, thunkAPI) => {
+    console.log(filters);
     try {
-      const params = new URLSearchParams();
+    
+      let params = {};
+      if (!filters) {
+        params = {};
+      } else {
+        if (filters.location) {
+          params.location = filters.location;
+        }
 
-      if (filters) {
-        const { location, vehicleType, vehicleEquipment } = filters;
+        
+        if (filters.vehicleType) {
+          params.form = filters.vehicleType; 
+        }
 
-        if (location) params.append('location', location);
-        if (vehicleType) params.append('form', vehicleType);
+        const equipment = Object.entries(filters.vehicleEquipment)
+          .filter(([key, value]) => value)
+          .map(([key]) => key);
 
-        Object.keys(vehicleEquipment).forEach((key) => {
-          if (vehicleEquipment[key]) {
-            params.append(key, 'true');
-          }
+        equipment.forEach(eq => {
+          params[eq] = true; 
         });
       }
 
-      const query = params.toString() ? `?${params.toString()}` : '';
-      const response = await axios.get(`${API_BASE_URL}${query}`);
-
-      return response.data;
+      console.log('Fetching campers with params:', params);
+      const response = await axios.get(API_BASE_URL, { params });
+      return response.data; 
     } catch (error) {
-      return rejectWithValue(
-        error.response ? error.response.data : { message: error.message }
-      );
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );

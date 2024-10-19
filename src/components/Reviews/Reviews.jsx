@@ -1,7 +1,8 @@
 import { useOutletContext } from 'react-router-dom';
-import UserReviews from '../UserReviews/UserReviews';
 import css from './Reviews.module.css'
-import BookingForm from '../BookingForm/BookingForm';
+import { lazy } from 'react';
+const UserReviews = lazy(()=> import('../UserReviews/UserReviews'));
+const BookingForm = lazy(()=> import('../BookingForm/BookingForm')) ;
 
 
 const Reviews = () => {
