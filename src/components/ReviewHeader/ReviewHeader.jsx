@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import css from './reviewHeader.module.css';
+import css from './ReviewHeader.module.css';
 import iconSprite from '../../assets/sprite.svg';
 
 const ReviewHeader = () => {
