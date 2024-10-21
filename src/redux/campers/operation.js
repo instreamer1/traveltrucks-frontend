@@ -6,7 +6,6 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const fetchCampers = createAsyncThunk(
   'campers/fetchCampers',
   async (filters, thunkAPI) => {
-    console.log(filters);
     try {
     
       let params = {};
@@ -31,7 +30,7 @@ export const fetchCampers = createAsyncThunk(
         });
       }
 
-      console.log('Fetching campers with params:', params);
+      // console.log('Fetching campers with params:', params);
       const response = await axios.get(API_BASE_URL, { params });
       return response.data; 
     } catch (error) {

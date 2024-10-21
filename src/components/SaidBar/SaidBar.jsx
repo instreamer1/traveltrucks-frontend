@@ -12,7 +12,6 @@ const SaidBar = () => {
   const isLoading = useSelector(selectIsLoading);
   const filters = useSelector(selectFilters);
   const [showWarning, setShowWarning] = useState(false);
-  console.log(filters);
 
   const handleLocationChange = e => {
     const newLocation = e.target.value;
