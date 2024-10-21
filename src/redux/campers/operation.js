@@ -5,6 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const fetchCampers = createAsyncThunk(
   'campers/fetchCampers',
+
   async (filters, thunkApi) => {
     const {
       location,
@@ -35,6 +36,7 @@ export const fetchCampers = createAsyncThunk(
       console.log(response.data);
    
       return response.data;
+
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
