@@ -5,36 +5,40 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const fetchCampers = createAsyncThunk(
   'campers/fetchCampers',
-  async (filters, thunkAPI) => {
+
+  async (filters, thunkApi) => {
+    const {
+      location,
+      vehicleType,
+      vehicleEquipment,
+      page = 1,
+      limit = 4,
+    } = filters;
     try {
+      const params = new URLSearchParams();
+
+      if (location) params.append('location', location);
+      if (vehicleType) params.append('form', vehicleType);
+      Object.keys(vehicleEquipment).forEach(key => {
+        if (vehicleEquipment[key]) {
+          params.append(key, 'true');
+        }
+      });
+      // Pagination
+      params.append('page', page); 
+      params.append('limit', limit);
+
+      // Forming URLs with query parameters
+      const query = params.toString() ? `?${params.toString()}` : '';
+      console.log(query);
     
-      let params = {};
-      if (!filters) {
-        params = {};
-      } else {
-        if (filters.location) {
-          params.location = filters.location;
-        }
+      const response = await axios.get(`${API_BASE_URL}${query}`);
+      console.log(response.data);
+   
+      return response.data;
 
-        
-        if (filters.vehicleType) {
-          params.form = filters.vehicleType; 
-        }
-
-        const equipment = Object.entries(filters.vehicleEquipment)
-          .filter(([key, value]) => value)
-          .map(([key]) => key);
-
-        equipment.forEach(eq => {
-          params[eq] = true; 
-        });
-      }
-
-      // console.log('Fetching campers with params:', params);
-      const response = await axios.get(API_BASE_URL, { params });
-      return response.data; 
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );

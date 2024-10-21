@@ -9,6 +9,8 @@ const initialState = {
     bathroom: false,
   },
   vehicleType: '',
+  page: 1,
+  limit: 4,
 };
 
 const filtersSlice = createSlice({
@@ -27,13 +29,15 @@ const filtersSlice = createSlice({
         bathroom: false,
       },
       vehicleType: '',
+      page: 1,
+      limit: 4,
     }),
+    setPage(state, action) {
+      console.log(action.payload);
+      state.page = action.payload;
+    },
   },
 });
 
-export const {
-  setFilters,
-  resetFilters,
-} = filtersSlice.actions;
-
+export const { setFilters, resetFilters, setPage } = filtersSlice.actions;
 export default filtersSlice.reducer;

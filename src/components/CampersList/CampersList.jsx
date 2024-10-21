@@ -3,47 +3,68 @@ import css from './CampersList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectIsLoading,
-  selectItemsPerPage,
+ 
   selectList,
+ 
   selectTotalItems,
 } from '../../redux/campers/selectors';
-import { setItemsPerPage } from '../../redux/campers/slice';
+
+import { fetchCampers } from '../../redux/campers/operation';
+import { selectFilters, selectLimit, selectPage } from '../../redux/filters/selectors';
+import { useEffect } from 'react';
+import { setPage } from '../../redux/filters/filtersSlice';
+// import { setItemsPerPage } from '../../redux/campers/slice';
 
 const CampersList = () => {
   const dispatch = useDispatch();
   const cars = useSelector(selectList);
-  const itemsPerPage = useSelector(selectItemsPerPage);
-  const totalItems = useSelector(selectTotalItems);
+  const page = useSelector(selectPage);
+  const limit = useSelector(selectLimit);
+  const totalItems = useSelector(selectTotalItems)
   const isLoading = useSelector(selectIsLoading);
+  const filters = useSelector(selectFilters)
+  const campersError = useSelector(state => state.campers.error);
 
+  const itemsPerPage = Math.ceil(totalItems / limit);
+  console.log("itemsPerPage",itemsPerPage);
+  console.log("totalItems", totalItems);
+  console.log("limit", limit);
 
+  useEffect(() => {
+    dispatch(fetchCampers(filters));
+  }, [dispatch, filters]);
 
-  const paginatedCars = cars.slice(0, itemsPerPage);
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handleLoadMore = () => {
-    if (itemsPerPage < totalItems && !isLoading) {
-      dispatch(setItemsPerPage(itemsPerPage + 4));
+    if (page < itemsPerPage && !isLoading) {
+      dispatch(setPage(page + 1));
+      const updatedFilters = { ...filters, page: page + 1 };
+      dispatch(fetchCampers(updatedFilters));
     }
   };
+  console.log("Cars before rendering:", cars);
 
+  if (campersError) {
+  return <p style={{ color: 'red' }}>Error: {campersError}, Not found</p>}
+    
+ 
   return (
     <>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <>
-          {paginatedCars.length > 0 ? (
+          {cars.length > 0 ? (
             <section className={css.carCards}>
               <ul className={css.carList}>
-                {paginatedCars.map(car => (
+                {cars.map(car => (
                   <li key={car.id} className={css.carItem}>
                     <CamperCard car={car} />
                   </li>
                 ))}
               </ul>
               <div className={css.pagination}>
-                {itemsPerPage < totalItems && (
+                { page < itemsPerPage && (
                   <button
                     className={css.btn}
                     onClick={handleLoadMore}
@@ -53,10 +74,11 @@ const CampersList = () => {
                 )}
               </div>
             </section>
-          ) 
-          : (
+      ) 
+         : (
             <p>0 results found</p>
-          )}
+           )}
+  
         </>
       )} 
     </>

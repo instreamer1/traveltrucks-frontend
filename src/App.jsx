@@ -1,10 +1,11 @@
 import './App.css';
 
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { lazy, Suspense, useEffect } from 'react';
 import { fetchCampers } from './redux/campers/operation';
 import { Toaster } from 'react-hot-toast';
+import { selectFilters } from './redux/filters/selectors.js';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage.jsx'));
 const CatalogPage = lazy(() => import('./pages/CatalogPage/CatalogPage.jsx'));
@@ -17,10 +18,9 @@ const Layout = lazy(() => import('./components/Layout/Layout.jsx'));
 
 const App = () => {
   const dispatch = useDispatch();
+  const filters = useSelector(selectFilters)
 
-  useEffect(() => {
-    dispatch(fetchCampers(null));
-  }, [dispatch]);
+
 
   return (
     <>
