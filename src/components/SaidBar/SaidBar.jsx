@@ -52,12 +52,12 @@ const SaidBar = () => {
       return;
     }
     setShowWarning(false);
-    dispatch(fetchCampers(filters));
+    dispatch(fetchCampers(filters)); 
   };
 
   const handleReset = () => {
     dispatch(resetFilters());
-    dispatch(fetchCampers());
+    // dispatch(fetchCampers(null));
   };
 
   return (
@@ -171,10 +171,9 @@ const SaidBar = () => {
             <path d='M0 1H360' stroke='#DADDE1' />
           </svg>
           <div className={css.filterOptionsWrap}>
-            <label
-              className={`${css.filterOption} ${
-                filters.vehicleType === 'alcove' ? css.selected : ''
-              }`}>
+            <label   className={`${css.filterOption} ${
+              filters.vehicleType === 'alcove' ? css.selected : ''
+            }`}>
               <input
                 type='radio'
                 name='vehicleType'
@@ -186,11 +185,10 @@ const SaidBar = () => {
                 <use href={`${iconSprite}#icon-bi_grid-1x2`}></use>
               </svg>
               Van
-            </label>
-            <label
-              className={`${css.filterOption} ${css.filterOptionIntegr}  ${
-                filters.vehicleType === 'fullyIntegrated' ? css.selected : ''
-              }`}>
+            </label >
+            <label  className={`${css.filterOption} ${css.filterOptionIntegr}  ${
+              filters.vehicleType === 'fullyIntegrated' ? css.selected : ''
+            }`}>
               <input
                 type='radio'
                 name='vehicleType'
@@ -203,10 +201,9 @@ const SaidBar = () => {
               </svg>
               Fully Integrated
             </label>
-            <label
-              className={`${css.filterOption} ${
-                filters.vehicleType === 'panelTruck' ? css.selected : ''
-              }`}>
+            <label  className={`${css.filterOption} ${
+              filters.vehicleType === 'panelTruck' ? css.selected : ''
+            }`}>
               <input
                 type='radio'
                 name='vehicleType'
@@ -231,7 +228,7 @@ const SaidBar = () => {
               type='button'
               className={css.searchBtn}
               onClick={handleReset}>
-              {isLoading ? 'Reset Filters...' : 'Reset Filters'}
+             Reset Filters
             </button>
           )}
           {showWarning && <p className={css.warningMessage}>Select filters</p>}

@@ -32,7 +32,7 @@ const CampersList = () => {
 
   useEffect(() => {
     dispatch(fetchCampers(filters));
-  }, [dispatch, filters]);
+  }, [dispatch]);
 
 
   const handleLoadMore = () => {
