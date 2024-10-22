@@ -19,6 +19,9 @@ const Layout = lazy(() => import('./components/Layout/Layout.jsx'));
 const App = () => {
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters)
+  useEffect(() => {
+    dispatch(fetchCampers(filters));
+  }, []);
 
 
 

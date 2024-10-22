@@ -38,17 +38,16 @@ const campersSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchCampers.fulfilled, (state, action) => {
-        console.log(action);
+        // console.log(action);
         state.isLoading = false;
         // state.list = action.payload.items;
-        // state.list = [...state.list, ...action.payload.items]
-        state.list = [
-          ...state.list, 
-          ...action.payload.items.filter(
-            item => !state.list.some(existingItem => existingItem.id === item.id)
-          )
-        ];
-    console.log(action.payload.total);
+        state.list = [...state.list, ...action.payload.items]
+        // state.list = [
+        //   ...state.list, 
+        //   ...action.payload.items.filter(
+        //     item => !state.list.some(existingItem => existingItem.id === item.id)
+        //   )
+        // ];
         state.totalItems = action.payload.total;
       })
       .addCase(fetchCampers.rejected, (state, action) => {

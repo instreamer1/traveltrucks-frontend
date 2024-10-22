@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   location: '',
   vehicleEquipment: {
     AC: false,
@@ -20,18 +20,9 @@ const filtersSlice = createSlice({
     setFilters: (state, action) => {
       return { ...state, ...action.payload };
     },
-    resetFilters: () => ({
-      location: '',
-      vehicleEquipment: {
-        AC: false,
-        kitchen: false,
-        TV: false,
-        bathroom: false,
-      },
-      vehicleType: '',
-      page: 1,
-      limit: 4,
-    }),
+    resetFilters: () => {
+      return {...initialState };
+    },
     setPage(state, action) {
       console.log(action.payload);
       state.page = action.payload;

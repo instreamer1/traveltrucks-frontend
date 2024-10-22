@@ -30,10 +30,10 @@ export const fetchCampers = createAsyncThunk(
 
       // Forming URLs with query parameters
       const query = params.toString() ? `?${params.toString()}` : '';
-      console.log(query);
+      // console.log(query);
     
       const response = await axios.get(`${API_BASE_URL}${query}`);
-      console.log(response.data);
+      // console.log(response.data);
    
       return response.data;
 

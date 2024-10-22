@@ -26,14 +26,11 @@ const CampersList = () => {
   const campersError = useSelector(state => state.campers.error);
 
   const itemsPerPage = Math.ceil(totalItems / limit);
-  console.log("itemsPerPage",itemsPerPage);
-  console.log("totalItems", totalItems);
-  console.log("limit", limit);
+  // console.log("itemsPerPage",itemsPerPage);
+  // console.log("totalItems", totalItems);
+  // console.log("limit", limit);
 
-  useEffect(() => {
-    dispatch(fetchCampers(filters));
-  }, [dispatch]);
-
+ 
 
   const handleLoadMore = () => {
     if (page < itemsPerPage && !isLoading) {
