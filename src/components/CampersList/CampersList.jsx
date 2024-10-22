@@ -11,9 +11,8 @@ import {
 
 import { fetchCampers } from '../../redux/campers/operation';
 import { selectFilters, selectLimit, selectPage } from '../../redux/filters/selectors';
-import { useEffect } from 'react';
 import { setPage } from '../../redux/filters/filtersSlice';
-// import { setItemsPerPage } from '../../redux/campers/slice';
+import { setDataPage } from '../../redux/campers/slice';
 
 const CampersList = () => {
   const dispatch = useDispatch();
@@ -35,11 +34,12 @@ const CampersList = () => {
   const handleLoadMore = () => {
     if (page < itemsPerPage && !isLoading) {
       dispatch(setPage(page + 1));
+      dispatch(setDataPage(page + 1));
       const updatedFilters = { ...filters, page: page + 1 };
       dispatch(fetchCampers(updatedFilters));
     }
   };
-  console.log("Cars before rendering:", cars);
+  // console.log("Cars before rendering:", cars);
 
   if (campersError) {
   return <p style={{ color: 'red' }}>Error: {campersError}, Not found</p>}

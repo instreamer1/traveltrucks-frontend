@@ -7,25 +7,13 @@ import { selectFilters } from '../../redux/filters/selectors';
 import { selectIsLoading } from '../../redux/campers/selectors';
 import { resetFilters, setFilters } from '../../redux/filters/filtersSlice';
 import { initialState } from '../../redux/filters/filtersSlice';
+import { setDataPage } from '../../redux/campers/slice';
 
 const SaidBar = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const filters = useSelector(selectFilters);
   const [showWarning, setShowWarning] = useState(false);
-
-  // const initialState = {
-  //   location: '',
-  //   vehicleEquipment: {
-  //     AC: false,
-  //     kitchen: false,
-  //     TV: false,
-  //     bathroom: false,
-  //   },
-  //   vehicleType: '',
-  //   page: 1,
-  //   limit: 4,
-  // };
 
   const handleLocationChange = e => {
     const newLocation = e.target.value;
@@ -65,8 +53,10 @@ const SaidBar = () => {
       setShowWarning(true);
       return;
     }
+    dispatch(setFilters({ ...filters, page: 1 }));
+    dispatch(setDataPage(1));
     setShowWarning(false);
-    dispatch(fetchCampers(filters));
+    dispatch(fetchCampers({...filters, page: 1}));
   };
 
   const handleReset = () => {
