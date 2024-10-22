@@ -50,13 +50,13 @@ const campersSlice = createSlice({
           state.list = action.payload.items;
         }
 
-        state.list = [...state.list, ...action.payload.items];
-        // state.list = [
-        //   ...state.list,
-        //   ...action.payload.items.filter(
-        //     item => !state.list.some(existingItem => existingItem.id === item.id)
-        //   )
-        // ];
+        // state.list = [...state.list, ...action.payload.items];
+        state.list = [
+          ...state.list,
+          ...action.payload.items.filter(
+            item => !state.list.some(existingItem => existingItem.id === item.id)
+          )
+        ];
         state.totalItems = action.payload.total;
       })
       .addCase(fetchCampers.rejected, (state, action) => {
