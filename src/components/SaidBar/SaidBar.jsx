@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from './SaidBar.module.css';
 import iconSprite from '../../assets/sprite.svg';
@@ -6,12 +6,26 @@ import { fetchCampers } from '../../redux/campers/operation';
 import { selectFilters } from '../../redux/filters/selectors';
 import { selectIsLoading } from '../../redux/campers/selectors';
 import { resetFilters, setFilters } from '../../redux/filters/filtersSlice';
+import { initialState } from '../../redux/filters/filtersSlice';
 
 const SaidBar = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const filters = useSelector(selectFilters);
   const [showWarning, setShowWarning] = useState(false);
+
+  // const initialState = {
+  //   location: '',
+  //   vehicleEquipment: {
+  //     AC: false,
+  //     kitchen: false,
+  //     TV: false,
+  //     bathroom: false,
+  //   },
+  //   vehicleType: '',
+  //   page: 1,
+  //   limit: 4,
+  // };
 
   const handleLocationChange = e => {
     const newLocation = e.target.value;
@@ -52,12 +66,13 @@ const SaidBar = () => {
       return;
     }
     setShowWarning(false);
-    dispatch(fetchCampers(filters)); 
+    dispatch(fetchCampers(filters));
   };
 
   const handleReset = () => {
-    dispatch(resetFilters());
-    // dispatch(fetchCampers(null));
+    dispatch(resetFilters())
+    dispatch(fetchCampers(initialState));
+   
   };
 
   return (
@@ -171,9 +186,10 @@ const SaidBar = () => {
             <path d='M0 1H360' stroke='#DADDE1' />
           </svg>
           <div className={css.filterOptionsWrap}>
-            <label   className={`${css.filterOption} ${
-              filters.vehicleType === 'alcove' ? css.selected : ''
-            }`}>
+            <label
+              className={`${css.filterOption} ${
+                filters.vehicleType === 'alcove' ? css.selected : ''
+              }`}>
               <input
                 type='radio'
                 name='vehicleType'
@@ -185,10 +201,11 @@ const SaidBar = () => {
                 <use href={`${iconSprite}#icon-bi_grid-1x2`}></use>
               </svg>
               Van
-            </label >
-            <label  className={`${css.filterOption} ${css.filterOptionIntegr}  ${
-              filters.vehicleType === 'fullyIntegrated' ? css.selected : ''
-            }`}>
+            </label>
+            <label
+              className={`${css.filterOption} ${css.filterOptionIntegr}  ${
+                filters.vehicleType === 'fullyIntegrated' ? css.selected : ''
+              }`}>
               <input
                 type='radio'
                 name='vehicleType'
@@ -201,9 +218,10 @@ const SaidBar = () => {
               </svg>
               Fully Integrated
             </label>
-            <label  className={`${css.filterOption} ${
-              filters.vehicleType === 'panelTruck' ? css.selected : ''
-            }`}>
+            <label
+              className={`${css.filterOption} ${
+                filters.vehicleType === 'panelTruck' ? css.selected : ''
+              }`}>
               <input
                 type='radio'
                 name='vehicleType'
@@ -228,7 +246,7 @@ const SaidBar = () => {
               type='button'
               className={css.searchBtn}
               onClick={handleReset}>
-             Reset Filters
+              Reset Filters
             </button>
           )}
           {showWarning && <p className={css.warningMessage}>Select filters</p>}
